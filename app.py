@@ -259,11 +259,11 @@ with tabs[1]:
 
     st.subheader(
         "Distribución de escuelas de Nivel Inicial por distrito a nivel país")
-    img1 = Image.open(r"imagen/inicial.png")
+    img1 = Image.open(r"imagen/Inicial.png")
     st.image(img1, use_container_width=True)
     st.subheader(
         "Distribución de escuelas de Nivel Primaria por distrito a nivel país")
-    img2 = Image.open(r"imagen/primaria.png")
+    img2 = Image.open(r"imagen/Primaria.png")
     st.image(img2, use_container_width=True)
 
     st.subheader(
