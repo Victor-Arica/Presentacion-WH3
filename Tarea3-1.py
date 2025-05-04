@@ -5,11 +5,10 @@
 
 
 import pandas as pd
-#from pandas import Series, DataFrame
+# from pandas import Series, DataFrame
 import numpy as np
-import matplotlib.pyplot as plt 
-#import chardet
-
+import matplotlib.pyplot as plt
+# import chardet
 
 
 import geopandas as gpd
@@ -28,7 +27,8 @@ print(gwd)
 # In[3]:
 
 
-dpt_shp = gpd.read_file(r'C:\Users\HP\OneDrive - Universidad del Pacífico\textos\Escritorio\2025-1\Git\PC\PC3\shape_file\DISTRITOS.shp')
+dpt_shp = gpd.read_file(
+    r'C:\Users\HP\OneDrive - Universidad del Pacífico\textos\Escritorio\2025-1\Git\PC\PC3\shape_file\DISTRITOS.shp')
 
 # In[4]:
 
@@ -50,7 +50,8 @@ dpt_shp.crs
 # In[7]:
 
 
-final_df = pd.read_excel(r'C:\Users\HP\OneDrive - Universidad del Pacífico\textos\Escritorio\2025-1\Git\PC\PC3\archivo_final.xlsx')
+final_df = pd.read_excel(
+    r'C:\Users\HP\OneDrive - Universidad del Pacífico\textos\Escritorio\2025-1\Git\PC\PC3\archivo_final.xlsx')
 print(final_df.head())
 
 
@@ -73,7 +74,7 @@ final_df = final_df[columnas]
 # In[9]:
 
 
-#final_df['Ubigeo'].unique() 1891
+# final_df['Ubigeo'].unique() 1891
 # dpt_shp['IDDIST'].unique() 1873
 
 # In[10]:
@@ -99,7 +100,7 @@ print('----------------')
 print(gdf_escuelas['Nivel / Modalidad'].unique())
 
 # # 🏫 Clasificación de Instituciones Educativas en Perú
-# 
+#
 # | **Categoría** | **Tipo de gestión**         | **Descripción**                                                                                                                                                                                   |
 # |---------------|-----------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 # | **Pública**   | Sector Educación            | Administradas directamente por el Ministerio de Educación o las Direcciones Regionales de Educación. Son gratuitas y constituyen la forma más común de educación pública.                       |
@@ -112,7 +113,7 @@ print(gdf_escuelas['Nivel / Modalidad'].unique())
 # |               | Comunal                     | Instituciones creadas y gestionadas por comunidades locales o asociaciones de padres de familia. Financiamiento y administración comunitarios.                                                  |
 # |               | Cooperativa                 | Escuelas gestionadas por cooperativas de docentes o padres de familia. Funcionan bajo principios cooperativos en la toma de decisiones y gestión.                                             |
 # |               | Fiscalizada                 | Instituciones privadas sujetas a supervisión y regulación estatal para asegurar el cumplimiento de estándares educativos.                                                                       |
-# 
+#
 
 # In[12]:
 
@@ -131,24 +132,31 @@ print("Tipo de IDDIST en dpt_shp:", dpt_shp['IDDIST'].dtype)
 # Convertir la columna numérica a texto (str)
 gdf_escuelas['IDDIST'] = gdf_escuelas['IDDIST'].astype(int)
 dpt_shp['IDDIST'] = dpt_shp['IDDIST'].astype(int)
-print("Tipo de IDDIST en gdf_escuelas después de la conversión:", gdf_escuelas['IDDIST'].dtype)
+print("Tipo de IDDIST en gdf_escuelas después de la conversión:",
+      gdf_escuelas['IDDIST'].dtype)
 
-# ## Hacer un mergue por cantidad de colegio segun su ID_distrito 
+# ## Hacer un mergue por cantidad de colegio segun su ID_distrito
 # Primero calculamos la cantidad luego el mergue
 
 # In[14]:
 
 
-dt_inicial = gdf_escuelas[gdf_escuelas['Nivel / Modalidad'].str.contains('Inicial', case=False)]
-dt_primaria = gdf_escuelas[gdf_escuelas['Nivel / Modalidad'].str.contains('Primaria', case=False)]
-dt_secundaria = gdf_escuelas[gdf_escuelas['Nivel / Modalidad'].str.contains('Secundaria', case=False)]
+dt_inicial = gdf_escuelas[gdf_escuelas['Nivel / Modalidad']
+                          .str.contains('Inicial', case=False)]
+dt_primaria = gdf_escuelas[gdf_escuelas['Nivel / Modalidad'].str.contains(
+    'Primaria', case=False)]
+dt_secundaria = gdf_escuelas[gdf_escuelas['Nivel / Modalidad'].str.contains(
+    'Secundaria', case=False)]
 
 # In[15]:
 
 
-cantidad_primaria = dt_primaria.groupby('IDDIST').size().reset_index(name='NumEscuelas')
-cantidad_inicial = dt_inicial.groupby('IDDIST').size().reset_index(name='NumEscuelas')
-cantidad_secundaria = dt_secundaria.groupby('IDDIST').size().reset_index(name='NumEscuelas')
+cantidad_primaria = dt_primaria.groupby(
+    'IDDIST').size().reset_index(name='NumEscuelas')
+cantidad_inicial = dt_inicial.groupby(
+    'IDDIST').size().reset_index(name='NumEscuelas')
+cantidad_secundaria = dt_secundaria.groupby(
+    'IDDIST').size().reset_index(name='NumEscuelas')
 # Merge con el shapefile para obtener la geometría de los distritos
 
 
@@ -174,8 +182,6 @@ dpt_secundaria = dpt_shp.merge(
 ).fillna({'NumEscuelas': 0})
 
 
-
-
 # In[28]:
 
 
@@ -197,7 +203,8 @@ dpt_inicial.plot(
 
 ax.axis('off')
 # Personalización
-plt.title('Distribución de escuelas de Nivel Inicial por distrito a nivel país', fontsize=14)
+plt.title(
+    'Distribución de escuelas de Nivel Inicial por distrito a nivel país', fontsize=14)
 plt.show()
 
 # In[29]:
@@ -221,7 +228,8 @@ dpt_primaria.plot(
 ax.axis('off')
 
 # Personalización
-plt.title('Distribución de escuelas de Nivel Primaria por distrito a nivel país', fontsize=14)
+plt.title(
+    'Distribución de escuelas de Nivel Primaria por distrito a nivel país', fontsize=14)
 plt.show()
 
 # In[27]:
@@ -248,12 +256,12 @@ ax.axis('off')
 plt.title('Distribución de escuelas de Nivel Secundaria por distrito a nivel país', fontsize=14)
 plt.show()
 
-# ### Relación entre `IDDPTO` y `DEPARTAMENTO` 
-# 
+# ### Relación entre `IDDPTO` y `DEPARTAMENTO`
+#
 # A continuación se muestra la correspondencia única entre los identificadores departamentales (`IDDPTO`) y los nombres de los departamentos (`DEPARTAMEN`):
-# 
-# 
-# 
+#
+#
+#
 # | IDDPTO | DEPARTAMEN     | IDDPTO | DEPARTAMEN     |
 # |--------|----------------|--------|----------------|
 # | 01     | AMAZONAS       | 14     | LAMBAYEQUE     |
@@ -269,23 +277,55 @@ plt.show()
 # | 11     | ICA            | 24     | TUMBES         |
 # | 12     | JUNÍN          | 25     | UCAYALI        |
 # | 13     | LA LIBERTAD    |        |                |
-# 
-# 
+#
+#
 # **Nota**: Para los códigos de departamentos de un solo dígito, asegúrate de anteponer un cero (por ejemplo, `01`, `02`, ..., `09`) para mantener el formato consistente de dos dígitos.
-# 
-# 
-# 
+#
+#
+#
 
 # In[20]:
 
 
 # SEGUNDA PARTE---------------
-# Uso de la librería folium para crear un mapa interactivo 
+# Uso de la librería folium para crear un mapa interactivo
 # Depatamento de Huancavelica y Ayacucho
 # Huancavelica: 09
 # Ayacucho: 05
 
 # In[ ]:
+# Nivel Secundaria
+# Crear figura
+fig, ax = plt.subplots(figsize=(12, 10))
 
+depa = str(input("Ingrese el ID del departamento: "))
+nive = str(input("Ingrese el nivel educativo: "))
+datanivel = []
 
+if nive == "Inicial":
+    datanivel = dt_inicial
+elif nive == "Primaria":
+    datanivel = dt_primaria
+elif nive == "Secundaria":
+    datanivel = dt_secundaria
 
+dpt = datanivel[datanivel['IDDPTO'] == depa]
+
+nomdepa = dpt['DEPARTAMEN'].unique()[0]
+# Mapa coroplético
+dpt.plot(
+    column='NumEscuelas',
+    cmap='Reds',
+    ax=ax,
+    legend=True,
+    edgecolor='black',
+    linewidth=0.1,
+    legend_kwds={'label': "Número de Escuelas"}
+)
+
+ax.axis('off')
+
+# Personalización
+plt.title(
+    f'Distribución de escuelas de Nivel {nive} por distrito del departamento de {nomdepa}', fontsize=14)
+plt.show()
